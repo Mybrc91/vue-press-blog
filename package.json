@@ -1,0 +1,9 @@
+{
+  "scripts": {
+    "blog:dev": "vuepress dev sources",
+    "blog:build": "vuepress build sources"
+  },
+  "devDependencies": {
+    "vuepress": "^0.8.3"
+  }
+}
