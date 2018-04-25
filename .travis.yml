@@ -1,0 +1,43 @@
+language: node_js
+node_js:
+- node
+branches:
+  only:
+  - master
+cache:
+  directories:
+  - node_modules
+  yarn: true
+# Handle git submodules yourself
+git:
+  submodules: false
+#env:
+#  global:
+#  - secure: xxx
+before_install:
+- export TZ='Asia/Shanghai'  # 设置时区
+#- sed -i'' "s~git@github.com:Mybrc91/mybrc91.github.io.git~https://${REPO_TOKEN}:x-oauth-basic@github.com/Mybrc91/mybrc91.github.io.git~"
+#  _config.yml
+#- git config --global user.name "Mybrc91"
+#- git config --global user.email Mybrc91@gmail.com
+
+install:
+- yarn
+
+script:
+- yarn blog:build
+#- cd sources/.vuepress/dist
+#- git init
+#- git add -A
+#- git commit -m 'deploy'
+#- git push -f git@github.com:mybrc91/vue-press-blog.git master:gh-pages
+
+deploy:
+  provider: pages
+  skip-cleanup: true
+  github-token: &GITHUB_TOKEN
+  local-dir: ./sources/.vuepress/dist/
+  target-branch: gh-pages
+  verbose: true
+  on:
+    branch: master
