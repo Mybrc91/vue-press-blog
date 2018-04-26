@@ -1,5 +1,4 @@
 ---
-sidebar: auto
 title: 自动化部署VuePress到GithubPages
 lang: zh-cn
 meta:
@@ -7,6 +6,7 @@ meta:
     content: deploy vuepress blog on travisci
   - name: keywords
     content: travis ci vuepress
+
 ---
 # 通过TravisCI自动化部署VuePress到GithubPages
 这篇文章主要介绍部署[vuepress](https://vuepress.vuejs.org)到[travis-ci](https://travis-ci.com)上，方便自动化发布文章。
