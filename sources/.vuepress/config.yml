@@ -12,5 +12,6 @@ themeConfig:
       link: /blog/
   sidebar:
     /blog/:
-      - deploy-vuepress-blog-on-travisci
+      - Deploy-Vuepress-Blog-On-TravisCI
+      - deploy-gogs-on-raspberrypi
       - wrap-viewpager
