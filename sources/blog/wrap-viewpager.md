@@ -3,7 +3,7 @@ title: 自适应WebView内容高度的ViewPager
 tag: Android
 category: Android
 ---
-
+# 打造自适应内容高度的ViewpPger
 在我们的项目中，有一个ViewPager中的子元素是WebView，由于WebView的内容高度是不确定的，这样的话会导致ViewPager的其他子元素高度无法控制。所以就需要打造一个自适应子元素高度的ViewPager。
 
 ## 获取WebView内容高度
