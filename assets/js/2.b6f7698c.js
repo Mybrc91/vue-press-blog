@@ -1,0 +1,1 @@
+(window.webpackJsonp=window.webpackJsonp||[]).push([[2],{51:function(t,n,s){"use strict";s.r(n);var e=s(0),a=Object(e.a)({},function(){var t=this.$createElement,n=this._self._c||t;return n("div",{staticClass:"content"},[n("img",{attrs:{src:this.$withBase("/favicon.png"),alt:"foo"}})])},[],!1,null,null,null);n.default=a.exports}}]);

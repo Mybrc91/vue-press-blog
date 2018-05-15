@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Mybrc91&#39;s Site | 自动化部署VuePress到GithubPages</title>
+    <meta name="description" content="Just A Tech Site.">
+    <link rel="icon" href="/vue-press-blog/favicon.png">
+    <meta name="description" content="deploy vuepress blog on travisci"><meta name="keywords" content="travis ci vuepress">
+    <link rel="preload" href="/vue-press-blog/assets/css/5.styles.53577bdb.css" as="style"><link rel="preload" href="/vue-press-blog/assets/js/app.f5e0e351.js" as="script"><link rel="preload" href="/vue-press-blog/assets/js/3.e3250995.js" as="script"><link rel="prefetch" href="/vue-press-blog/assets/js/0.55d96b2d.js"><link rel="prefetch" href="/vue-press-blog/assets/js/1.3a41dedf.js"><link rel="prefetch" href="/vue-press-blog/assets/js/2.b6f7698c.js"><link rel="prefetch" href="/vue-press-blog/assets/js/4.4c4cd364.js">
+    <link rel="stylesheet" href="/vue-press-blog/assets/css/5.styles.53577bdb.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div><a href="/vue-press-blog/" class="home-link router-link-active"><!----><span class="site-name">
+      Mybrc91's Site
+    </span></a><div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""><!----></div><nav class="nav-links can-hide"><div class="nav-item"><a href="/vue-press-blog/blog/" class="nav-link router-link-active">Blog</a></div><!----></nav></div></header><div class="sidebar-mask"></div><div class="sidebar"><nav class="nav-links"><div class="nav-item"><a href="/vue-press-blog/blog/" class="nav-link router-link-active">Blog</a></div><!----></nav><ul class="sidebar-links"><li><a href="/vue-press-blog/blog/Deploy-Vuepress-Blog-On-TravisCI.html" class="active sidebar-link">自动化部署VuePress到GithubPages</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/vue-press-blog/blog/Deploy-Vuepress-Blog-On-TravisCI.html#安装vuepress" class="sidebar-link">安装VuePress</a></li><li class="sidebar-sub-header"><a href="/vue-press-blog/blog/Deploy-Vuepress-Blog-On-TravisCI.html#配置" class="sidebar-link">配置</a></li><li class="sidebar-sub-header"><a href="/vue-press-blog/blog/Deploy-Vuepress-Blog-On-TravisCI.html#资源文件" class="sidebar-link">资源文件</a></li><li class="sidebar-sub-header"><a href="/vue-press-blog/blog/Deploy-Vuepress-Blog-On-TravisCI.html#在github-page上部署" class="sidebar-link">在Github Page上部署</a></li></ul></li><li><a href="/vue-press-blog/blog/deploy-gogs-on-raspberrypi.html" class="sidebar-link">在树莓派上部署git服务gogs</a></li><li><a href="/vue-press-blog/blog/wrap-viewpager.html" class="sidebar-link">自适应WebView内容高度的ViewPager</a></li></ul></div><div class="page"><div class="content"><h1 id="通过travisci自动化部署vuepress到githubpages"><a href="#通过travisci自动化部署vuepress到githubpages" aria-hidden="true" class="header-anchor">#</a> 通过TravisCI自动化部署VuePress到GithubPages</h1><p>这篇文章主要介绍部署<a href="https://vuepress.vuejs.org" target="_blank" rel="noopener noreferrer">vuepress</a>到<a href="https://travis-ci.com" target="_blank" rel="noopener noreferrer">travis-ci</a>上，方便自动化发布文章。</p><blockquote><p>VuePress is composed of two parts: a minimalistic static site generator with a Vue-powered theming system, and a default theme optimized for writing technical documentation. It was created to support the documentation needs of Vue's own sub projects.</p></blockquote><p><a href="https://vuepress.vuejs.org" target="_blank" rel="noopener noreferrer">vuepress</a>是一个由<a href="https://vuejs.org/" target="_blank" rel="noopener noreferrer">vuejs</a>驱动的静态网站生成系统。默认带有一个为编写技术文档优化的主题。所以我们可以用它来代替类似Hexo等静态网站系统，并且能通过vue带来更多有用的特性，具体内容请去<a href="https://vuepress.vuejs.org" target="_blank" rel="noopener noreferrer">vuepress</a>官网查看。</p><h2 id="安装vuepress"><a href="#安装vuepress" aria-hidden="true" class="header-anchor">#</a> 安装VuePress</h2><div class="warning custom-block"><p class="custom-block-title">注意</p><p>VuePress需要Node.js 版本&gt;=8。</p></div><h3 id="全局安装"><a href="#全局安装" aria-hidden="true" class="header-anchor">#</a> 全局安装</h3><pre class="language-bash"><code><span class="token comment"># 全局安装</span>
+yarn global add vuepress <span class="token comment"># OR npm install -g vuepress</span>
+
+<span class="token comment"># 创建md文件</span>
+<span class="token keyword">echo</span> <span class="token string">'# Hello VuePress'</span> <span class="token operator">&gt;</span> README.md
+
+<span class="token comment"># 启动服务器</span>
+vuepress dev
+
+<span class="token comment"># 编译成静态文件</span>
+vuepress build
+</code></pre><h3 id="本地安装"><a href="#本地安装" aria-hidden="true" class="header-anchor">#</a> 本地安装</h3><p>如果用于项目文档，需要把VuePress安装到本地项目目录。由于本文目的是用于静态博客，所以从建目录开始。</p><pre class="language-bash"><code><span class="token comment">#创建项目目录</span>
+<span class="token function">mkdir</span> vue-press-blog
+
+<span class="token function">cd</span> vue-press-blog
+
+<span class="token comment">#安装vuepress</span>
+yarn add -D vuepress <span class="token comment"># or npm install -D vuepress</span>
+
+<span class="token comment">#创建sources目录</span>
+<span class="token function">mkdir</span> sources
+
+<span class="token keyword">echo</span> <span class="token string">'# Hello VuePress'</span><span class="token operator">&gt;</span> sources/README.md
+</code></pre><div class="warning custom-block"><p class="custom-block-title">警告</p><p>如果在已经存在的项目中使用了webpack 3.x依赖，推荐使用<a href="https://yarnpkg.com/" target="_blank" rel="noopener noreferrer">yarn</a>
+安装依赖，npm安装的话依赖树无法正确生成。</p></div><p>然后添加下面的内容到<code>package.json</code>文件中：</p><pre class="language-json"><code><span class="token punctuation">{</span>
+  <span class="token property">&quot;scripts&quot;</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+<span class="highlighted-line">    <span class="token property">&quot;blog:dev&quot;</span><span class="token operator">:</span> <span class="token string">&quot;vuepress dev sources&quot;</span><span class="token punctuation">,</span></span><span class="highlighted-line">    <span class="token property">&quot;blog:build&quot;</span><span class="token operator">:</span> <span class="token string">&quot;vuepress build sources&quot;</span></span>  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre><p>高亮行的<code>blog:dev</code>是可以自定义的，<code>sources</code>代表md文件的目录，也可以自定义，只要有对应的目录就可以。</p><p>现在可以运行刚添加的命令，开始编写md文件，同时在浏览器中预览效果，VuePress会自动加载更改的文件。</p><pre class="language-bash"><code>yarn blog:dev <span class="token comment"># or npm run blog:dev</span>
+</code></pre><p>如果要生成静态页面，可以运行：</p><pre class="language-bash"><code>yarn blog:build <span class="token comment"># or npm run blog:build</span>
+</code></pre><p>静态页面默认在<code>sources/.vuepress/dist/</code>目录下,可以通过<code>.vuepress/config.js</code>文件base字段自定义配置。生成的静态文件可以放到任意server上。</p><h2 id="配置"><a href="#配置" aria-hidden="true" class="header-anchor">#</a> 配置</h2><p>新建配置文件<code>config.js</code>在<code>.vuepress/</code>目录下，更多配置信息参考<a href="https://vuepress.vuejs.org/guide/basic-config.html" target="_blank" rel="noopener noreferrer">vuepress官网</a></p><h2 id="资源文件"><a href="#资源文件" aria-hidden="true" class="header-anchor">#</a> 资源文件</h2><p>新建资源文件目录<code>.vuepress/public</code>，这个目录下的文件在<code>vuepress build</code>时会复制到<code>dist</code>根目录下。</p><h3 id="base-url"><a href="#base-url" aria-hidden="true" class="header-anchor">#</a> Base URL</h3><p>本文要把vuepress部署到github page上，需要定义<code>base</code>变量，为了正确引用资源文件。不在github page上部署的话，不需要理会。</p><p>如果部署在<code>https://{your-github-name}.github.io</code>地址上,不需要配置。要是类似<code>https://{your-github-name}.github.io/{repo-name}/</code>地址上，需要在<code>config.js</code>中定义<code>base</code>的值为<code>/{repo-name}/</code>。</p><pre class="language-js"><code><span class="token comment">//config.js</span>
+module<span class="token punctuation">.</span>exports <span class="token operator">=</span> <span class="token punctuation">{</span>
+<span class="highlighted-line">    base<span class="token punctuation">:</span><span class="token string">'/vue-press-blog/'</span><span class="token punctuation">,</span></span>    title<span class="token punctuation">:</span><span class="token string">'Mybrc91\'s Site'</span><span class="token punctuation">,</span>
+    description<span class="token punctuation">:</span><span class="token string">'Just A Tech Site.'</span>
+<span class="token punctuation">}</span>
+</code></pre><h2 id="在github-page上部署"><a href="#在github-page上部署" aria-hidden="true" class="header-anchor">#</a> 在Github Page上部署</h2><h3 id="初始化github仓库"><a href="#初始化github仓库" aria-hidden="true" class="header-anchor">#</a> 初始化github仓库</h3><h4 id="创建仓库"><a href="#创建仓库" aria-hidden="true" class="header-anchor">#</a> 创建仓库</h4><ol><li>如果要部署到<code>https://{your-github-name}.github.io</code>地址上，需要创建以<code>{your-github-name}.github.io</code>为名字的仓库</li><li>如果部署到<code>https://{your-github-name}.github.io/{repo-name}/</code>地址上，要创建<code>{repo-name}</code>仓库。</li></ol><p>本文是第二种，创建了<code>vue-press-blog</code>仓库。</p><h4 id="部署源码"><a href="#部署源码" aria-hidden="true" class="header-anchor">#</a> 部署源码</h4><p>在根目录下创建忽略文件<code>.gitginore</code>，填入如下内容。高亮行可以根据情况修改，不需要把生成的静态文件提交到github上：</p><pre class="language-text"><code>.DS_Store
+Thumbs.db
+db.json
+*.log
+node_modules/
+<span class="highlighted-line">sources/.vuepress/dist/</span>*.bat
+*.sh
+</code></pre><p>在根目录创建<code>deploy.sh</code>，填入以下内容:</p><pre class="language-bash"><code><span class="token comment">#!/usr/bin/env sh</span>
+
+<span class="token comment"># 发生错误时停止</span>
+<span class="token keyword">set</span> -e
+
+<span class="token function">git</span> init
+<span class="token function">git</span> add -A
+<span class="token function">git</span> commit -m <span class="token string">'init'</span>
+
+<span class="token function">git</span> config --local user.name <span class="token string">&quot;{name}&quot;</span>
+<span class="token function">git</span> config --local user.email <span class="token punctuation">{</span>email<span class="token punctuation">}</span>
+
+<span class="token comment"># 如果部署到 https://{USERNAME}.github.io</span>
+<span class="token comment"># git push -f git@github.com:{USERNAME}/{USERNAME}.github.io.git master:{branch-name}</span>
+
+<span class="token comment"># 如果部署到 https://{USERNAME}.github.io/{REPO}</span>
+<span class="token comment">#git push -f git@github.com:{USERNAME}/{REPO}.git master</span>
+
+<span class="token function">cd</span> -
+</code></pre><p>运行命令<code>. deploy.sh</code>,把源码提交到github上。</p><h3 id="配置tracisci"><a href="#配置tracisci" aria-hidden="true" class="header-anchor">#</a> 配置TracisCI</h3><h4 id="创建配置文件"><a href="#创建配置文件" aria-hidden="true" class="header-anchor">#</a> 创建配置文件</h4><p>在项目根目录下创建travis-ci的配置文件<code>.travis.yml</code>，travis-ci根据这个文件自动编译部署。</p><p>配置如下，注意高亮行，需要使用lts版本的nodejs：</p><pre class="language-yaml"><code><span class="token key atrule">language</span><span class="token punctuation">:</span> node_js
+<span class="token key atrule">node_js</span><span class="token punctuation">:</span>
+<span class="highlighted-line">  <span class="token punctuation">-</span> <span class="token string">&quot;lts/*&quot;</span></span><span class="token key atrule">branches</span><span class="token punctuation">:</span>
+  <span class="token key atrule">only</span><span class="token punctuation">:</span>
+  <span class="token punctuation">-</span> master
+
+<span class="token key atrule">cache</span><span class="token punctuation">:</span>
+  <span class="token key atrule">directories</span><span class="token punctuation">:</span>
+  <span class="token punctuation">-</span> node_modules
+  <span class="token key atrule">yarn</span><span class="token punctuation">:</span> <span class="token boolean important">true</span>
+
+<span class="token key atrule">before_install</span><span class="token punctuation">:</span>
+<span class="token punctuation">-</span> export TZ='Asia/Shanghai'  <span class="token comment"># 设置时区</span>
+
+<span class="token key atrule">install</span><span class="token punctuation">:</span>
+<span class="token punctuation">-</span> yarn
+
+<span class="token key atrule">script</span><span class="token punctuation">:</span>
+<span class="token punctuation">-</span> yarn blog<span class="token punctuation">:</span>build
+
+<span class="token key atrule">deploy</span><span class="token punctuation">:</span>
+  <span class="token key atrule">provider</span><span class="token punctuation">:</span> pages
+  <span class="token key atrule">skip-cleanup</span><span class="token punctuation">:</span> <span class="token boolean important">true</span>
+  <span class="token key atrule">github-token</span><span class="token punctuation">:</span> $GITHUB_TOKEN
+  <span class="token key atrule">local-dir</span><span class="token punctuation">:</span> ./sources/.vuepress/dist/ <span class="token comment">## 根据情况自定义到静态文件输出目录</span>
+  <span class="token key atrule">target-branch</span><span class="token punctuation">:</span> gh<span class="token punctuation">-</span>pages
+  <span class="token key atrule">verbose</span><span class="token punctuation">:</span> <span class="token boolean important">true</span>
+  <span class="token key atrule">on</span><span class="token punctuation">:</span>
+    <span class="token key atrule">branch</span><span class="token punctuation">:</span> master
+
+</code></pre><h4 id="设置travis-ci-org"><a href="#设置travis-ci-org" aria-hidden="true" class="header-anchor">#</a> 设置travis-ci.org</h4><ol><li>首先获取从github网站获取GITHUB_TOKEN。登录github，打开<a href="https://github.com/settings/tokens" target="_blank" rel="noopener noreferrer">token</a>,点击<code>Generate new token</code>,根据提示创建token，选项一般都取默认值，最后获取到一个字符串token。</li></ol><p>2 .假设已经会使用travis-ci，然后登录<a href="https://travis-ci.org/" target="_blank" rel="noopener noreferrer">travis-ci.org</a>，添加新建的仓库。打开仓库的<code>setting</code>项,在<code>Environment Variables</code>条目下添加<code>GITHUB_TOKEN</code>变量，变量值就是上一步获取到的token。</p><h4 id="提交代码到github"><a href="#提交代码到github" aria-hidden="true" class="header-anchor">#</a> 提交代码到github</h4><p>在根目录输入以下命令：</p><pre class="language-bash"><code><span class="token function">git</span> init
+<span class="token function">git</span> add -A
+<span class="highlighted-line"><span class="token function">git</span> commit -m <span class="token string">'{comment}'</span></span><span class="token function">git</span> push -u <span class="token punctuation">{</span>git地址<span class="token punctuation">}</span> master
+</code></pre><p>高亮行的<code>{comment}</code>替换成实际的提交评论，<code>{git 地址}</code>替换前面创建仓库的地址。</p><p>travis-ci检测到项目的提交，就会根据<code>.travis.yml</code>文件去编译项目，最后把生成的静态文件推送到仓库的<code>gh-pages</code>分支，然后访问对应的目录就能看到生成的静态网站。本文生成的地址是<a href="http://mybrc91.github.io/vue-press-blog" target="_blank" rel="noopener noreferrer">mybrc91.github.io/vue-press-blog</a>。</p><p>以后有新的改动，只需要执行最后一步提交代码的命令，travis-ci就会自动编译部署。</p></div><!----><div class="content page-nav"><p class="inner"><!----><span class="next"><a href="/vue-press-blog/blog/deploy-gogs-on-raspberrypi.html">
+          在树莓派上部署git服务gogs
+        </a> →
+      </span></p></div></div></div></div>
+    <script src="/vue-press-blog/assets/js/3.e3250995.js" defer></script><script src="/vue-press-blog/assets/js/app.f5e0e351.js" defer></script>
+  </body>
+</html>
