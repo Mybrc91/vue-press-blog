@@ -210,6 +210,6 @@ git push -u {git地址} master
 ```
 高亮行的`{comment}`替换成实际的提交评论，`{git 地址}`替换前面创建仓库的地址。
 
-travis-ci检测到项目的提交，就会根据`.travis.yml`文件去编译项目，最后把生成的静态文件推送到仓库的`gh-pages`分支，然后访问对应的目录就能看到生成的静态网站。本文生成的地址是[mybrc91.github.io/vue-press-blog](mybrc91.github.io/vue-press-blog)。
+travis-ci检测到项目的提交，就会根据`.travis.yml`文件去编译项目，最后把生成的静态文件推送到仓库的`gh-pages`分支，然后访问对应的目录就能看到生成的静态网站。本文生成的地址是[mybrc91.github.io/vue-press-blog](http://mybrc91.github.io/vue-press-blog)。
 
 以后有新的改动，只需要执行最后一步提交代码的命令，travis-ci就会自动编译部署。
